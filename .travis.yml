@@ -1,0 +1,29 @@
+language: rust
+rust:
+- stable
+- beta
+- nightly
+jobs:
+  allow_failures:
+  - rust: nightly
+  fast_finish: true
+cache: cargo
+before_install:
+- rustup component add rustfmt
+- rustup component add clippy
+script:
+- cargo fmt -- --check
+- cargo clippy -- -D warnings
+- cargo build --release
+- cd target/release; shasum -a 512 gossip-bot > gossip-bot.sums; cd ../..
+deploy:
+  provider: releases
+  api_key:
+    secure: d+Ctm17i1e53R3N8pFKvfH7sqqBvz5ADhBaGpHGJDMZK4/sCkkoiQ4RdLbNQDXG1GqTv2tl1W3R7qD9c2TYv2niq7LaLGdAbtz7VBO2ByrU39CvpAYGcI1yQ/1mzFLdiyv7ggU7aWaUQ0HX9vZ7rd8Uz3T6qOto76209dR8mVrn+E9ANYWzfzqza46mqg14MpkAYYz7YEgQEICHZ8OHawyY9iGyzXWMcUED6hVRal27U3q2RtE90jjE7Xpenu09eqXywc2UAb9kfqgRtmjDRvsiklFDZ8fZl907iYkABW8ufPqgwalR317EFTFsUqnw8i0wntC2KwJ1uyKm7XCp66VtrdFbOOfi96N+eYQYPHAV3MLowTeg47ve7s288FFczLG4TgrMTSgCekCh+HUVmBdSg6bsrdwF+MfNEmhV1klWpImKLeXqtJQXkQTnJtdfRjiBiym/e2dPnY2Zm+6+FyMo4NWy1R7JhM0cdKJ9LCug+aCCh9HOfGEyAawEB3Srbk1tEsj3kSjoLc4JyC8mTWrowyINdCZX0iRu9FfGusDD1zQQn9/pEoTw1nm7OivEvmtV+sO5fwU3IHMdw1+aUVdz9FopqZvuXGcCXMcFnxarvdOzQyw57ND0hq3NhQsoIbCQUlHPyLrlFssBbdUt1yprgKNhN39v2OJZRQ9Q5Ib8=
+  file:
+    - target/release/gossip-bot
+    - target/release/gossip-bot.sums
+  on:
+    repo: cezarmathe/gossip-bot
+    tags: true
+  skip_cleanup: 'true'

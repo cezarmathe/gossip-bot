@@ -1,0 +1,8 @@
+# Rust build artifacts
+/target
+
+# Dotenv file for running the bot
+.env
+
+# Sqlite database file
+*.db
