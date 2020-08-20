@@ -15,7 +15,8 @@ mod storage;
 use std::env;
 
 fn main() -> anyhow::Result<()> {
-    kankyo::load()?;
+    // do not overwrite the environment variables that have already been set
+    kankyo::load(false);
     env_logger::init();
 
     let token = env::var("GOSSIP_BOT_TOKEN")?;
