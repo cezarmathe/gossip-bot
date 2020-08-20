@@ -7,3 +7,21 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow            = "1.0"
+chrono            = "0.4"
+diesel_migrations = "1.4.0"
+env_logger        = "0.7"
+kankyo            = "0.2"
+log               = "0.4"
+rand              = "0.7"
+rand_chacha       = "0.2.2"
+serde_json        = "1.0"
+thiserror         = "1.0"
+
+[dependencies.diesel]
+version = "1.4"
+features = ["chrono", "r2d2", "sqlite"]
+
+[dependencies.serenity]
+version = "0.8"
+features = ["cache", "framework", "standard_framework", "rustls_backend"]
